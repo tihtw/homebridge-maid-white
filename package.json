@@ -1,0 +1,22 @@
+{
+  "name": "homebridge-maid-white",
+  "version": "1.0.0",
+  "description": "Homebridge plugin for Maid White.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "Maid White",
+    "MaidWhite"
+  ],
+  "engines": {
+    "homebridge": ">=0.2.0"
+  },
+  "author": "Pichu Chen",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
