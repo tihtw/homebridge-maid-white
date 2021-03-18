@@ -91,22 +91,22 @@ SamplePlatform.prototype.DiscoveryDevices = function() {
       // log("driver-info", json)
       // log("config", config)
 
-      if (config.accessToken == '') {
+      if (config.accessToken == '' ) {
         const username = config['username']
         const password = config['password']
-        fetch(host + "2/token", {
+        fetch(host + "/2/token", {
             method: "POST",
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password)+"&client_id=homebridge",
           })
           .then(res => res.json())
           .then(json => {
-            log("get access token:", json)
+            platform.log("get access token:", json)
 
             if (typeof(json['access_token']) != "undefined") {
               config['password'] = ""
               config['accessToken'] = json['access_token']
-              log("replace confige with", config)
+              platform.log("replace confige with", config)
               this.config = config
             }
           })
@@ -114,9 +114,9 @@ SamplePlatform.prototype.DiscoveryDevices = function() {
       }else{
         this.accessToken = config["accessToken"]
         if (config['password'] && config['password'] != ""){
-          log("warn, password should be removed")
+          platform.log("warn, password should be removed")
         }
-
+	platform.log("access token:", this.accessToken);
         fetch(host + "/2/homes",{
             method: "GET",
             headers: {
