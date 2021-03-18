@@ -1,10 +1,14 @@
 {
   "name": "homebridge-maid-white",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Homebridge plugin for Maid White.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://https://github.com/tihtw/homebridge-maid-white"
   },
   "keywords": [
     "homebridge-plugin",
@@ -18,5 +22,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "node-fetch": "^2.6.1"
-  }
+  },
+  "homepage": "https://www.tih.tw"
 }
