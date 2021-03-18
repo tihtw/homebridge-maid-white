@@ -1,6 +1,6 @@
 {
   "name": "homebridge-maid-white",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Homebridge plugin for Maid White.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://https://github.com/tihtw/homebridge-maid-white"
+    "url": "https://github.com/tihtw/homebridge-maid-white"
+  },
+  "bugs": {
+    "url" : "https://github.com/tihtw/homebridge-maid-white/issues"
   },
   "keywords": [
     "homebridge-plugin",
