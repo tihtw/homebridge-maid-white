@@ -1,6 +1,6 @@
 {
   "name": "homebridge-maid-white",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Homebridge plugin for Maid White.",
   "main": "index.js",
   "scripts": {
