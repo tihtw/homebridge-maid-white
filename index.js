@@ -475,7 +475,21 @@ SamplePlatform.prototype.ConfigureMaidWhiteSmartplug = function(accessory) {
   })
   onChar.on('get', function(callback){
     platform.log(accessory.displayName, "Smartplug on get:");
-    callback(null, 0)
+
+    platform.fetchDeviceWithCache(accessory, data => {
+      platform.log("got cached data: ", data)
+	if(data["online"] == false || data["online"] == 'false') {
+            accessory.updateReachability(false);
+             return;
+        }
+        accessory.updateReachability(true);
+
+      if(data["power_status"] == false || data['power_status'] == 'false'){
+        callback(null, 0) 
+      }else{
+	callback(null, 1)
+      }
+    })
   })
 
 }
