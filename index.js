@@ -25,41 +25,14 @@ module.exports = function(homebridge) {
 // config may be null
 // api may be null if launched from old homebridge version
 function SamplePlatform(log, config, api) {
-    log("SamplePlatform Init");
+    log("SamplePlatform Init: with comfig:", config);
+//    platform.log("config:", config);
     var platform = this;
     this.log = log;
     this.config = config;
     this.accessories = [];
     this.deviceCache = {}
     log("Config: " + JSON.stringify(config))
-
-    this.requestServer = http.createServer(function(request, response) {
-        if (request.url === "/add") {
-            this.addAccessory(new Date().toISOString());
-            response.writeHead(204);
-            response.end();
-        }
-
-        if (request.url == "/reachability") {
-            this.updateAccessoriesReachability();
-            response.writeHead(204);
-            response.end();
-        }
-
-        if (request.url == "/remove") {
-            this.removeAccessory();
-            response.writeHead(204);
-            response.end();
-        }
-    }.bind(this));
-
-    this.requestServer.listen(18081, function() {
-        platform.log("Server Listening...");
-    });
-
-
-    // this.addAccessory()
-
     if (api) {
         // Save the API object as plugin needs to register new accessory via this object
         this.api = api;
@@ -74,10 +47,11 @@ function SamplePlatform(log, config, api) {
 
 
         }.bind(this));
+    }else{
+      log("Error: old homebridge version")
     }
 
 }
-
 
 SamplePlatform.prototype.DiscoveryDevices = function() {
     const config = this.config
