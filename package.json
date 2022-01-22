@@ -24,7 +24,7 @@
   "author": "Pichu Chen",
   "license": "Apache-2.0",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.1.1"
   },
   "homepage": "https://www.tih.tw"
 }
