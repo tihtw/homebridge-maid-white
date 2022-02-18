@@ -241,7 +241,7 @@ SamplePlatform.prototype.configureAccessory = function(accessory) {
             isSupported = true
             break
         default:
-            switch (newAccessory.context.driverName){
+            switch (accessory.context.driverName){
                 case "tw.tih.infrared.general_remote_controller.button":
                     // TODO: Add config for expouse button
                     this.ConfiguraMaidWhiteInfraredButton(accessory)
