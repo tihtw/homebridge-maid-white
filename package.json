@@ -1,6 +1,6 @@
 {
   "name": "homebridge-maid-white",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Homebridge plugin for Maid White.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/tihtw/homebridge-maid-white"
   },
   "bugs": {
-    "url" : "https://github.com/tihtw/homebridge-maid-white/issues"
+    "url": "https://github.com/tihtw/homebridge-maid-white/issues"
   },
   "keywords": [
     "homebridge-plugin",
@@ -24,7 +24,7 @@
   "author": "Pichu Chen",
   "license": "Apache-2.0",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.7"
   },
   "homepage": "https://github.com/tihtw/homebridge-maid-white"
 }
