@@ -192,26 +192,32 @@ SamplePlatform.prototype.AddMaidWhiteDevice = function(device) {
 
     // Make sure you provided a name for service, otherwise it may not visible in some HomeKit apps
 
-
+    var isSupported = false
     switch (newAccessory.context.screenType) {
         case "thermostat":
+            isSupported = true
             newAccessory.addService(Service.Thermostat, device["display_name"])
             break;
         case "smartplug":
+            isSupported = true
             newAccessory.addService(Service.Switch, device["display_name"])
+            break;
+        default:
+            switch (newAccessory.context.driverName){
+                case "tw.tih.infrared.general_remote_controller.button":
+                    // TODO: Add config for expouse button
+                isSupported = true
+                    newAccessory.addService(Service.Switch, device["display_name"])
+                    break;
+            }
             break;
     }
     this.configureAccessory(newAccessory)
 
 
-
-    switch (newAccessory.context.screenType) {
-        case "thermostat":
-        case "smartplug":
-            this.api.registerPlatformAccessories("homebridge-maid-white", "Maid White", [newAccessory]);
-            break;
+    if (isSupported) {
+        this.api.registerPlatformAccessories("homebridge-maid-white", "Maid White", [newAccessory])
     }
-
 
     // this.accessories.push(newAccessory);
 
@@ -224,21 +230,32 @@ SamplePlatform.prototype.AddMaidWhiteDevice = function(device) {
 SamplePlatform.prototype.configureAccessory = function(accessory) {
     this.log(accessory.displayName, "Configure Accessory");
     var platform = this;
-
+    var isSupported = false
     switch (accessory.context.screenType) {
         case 'thermostat':
             this.ConfigureMaidWhiteThermostat(accessory)
-            this.accessories.push(accessory);
-            return
+            isSupported = true
+            break
         case 'smartplug':
             this.ConfigureMaidWhiteSmartplug(accessory)
-            this.accessories.push(accessory)
-            return
-
-        case 'hidden':
-            return
+            isSupported = true
+            break
+        default:
+            switch (newAccessory.context.driverName){
+                case "tw.tih.infrared.general_remote_controller.button":
+                    // TODO: Add config for expouse button
+                    this.ConfiguraMaidWhiteInfraredButton(accessory)
+                    isSupported = true
+                    break
+            }
+            break
 
     }
+
+    if (isSupported){
+        this.accessories.push(accessory)
+    }
+
     return
 
     // Set the accessory to reachable if plugin can currently process the accessory,
@@ -467,8 +484,46 @@ SamplePlatform.prototype.ConfigureMaidWhiteSmartplug = function(accessory) {
             }
         })
     })
-
 }
+
+
+SamplePlatform.prototype.ConfiguraMaidWhiteInfraredButton = function(accessory) {
+    this.log(accessory.displayName, "Configure Maid White Smartplug");
+    var platform = this;
+    const service = accessory.getService(Service.Switch)
+    const onChar = service.getCharacteristic(Characteristic.On)
+
+    onChar.on('set', function(value, callback) {
+        platform.log(accessory.displayName, "Button on -> " + value);
+
+        body = "power_status=true"
+
+        platform.setDevice(accessory, body, _ => {
+            callback();
+        });
+
+    });
+
+    onChar.on('change', function(oldValue, newValue) {
+        platform.log(accessory.displayName, "Button on " + oldValue + " -> " + newValue);
+    })
+    onChar.on('get', function(callback) {
+        platform.log(accessory.displayName, "Button on get:")
+        callback(null, 0)
+
+        platform.fetchDeviceWithCache(accessory, data => {
+            platform.log("got cached data: ", data)
+            if (data["online"] == false || data["online"] == 'false') {
+                accessory.updateReachability(false);
+                return;
+            }
+            accessory.updateReachability(true);
+        })
+    })
+}
+
+
+
 
 SamplePlatform.prototype.fetchDeviceWithCache = function(accessory, callback) {
     const platform = this
