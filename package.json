@@ -26,5 +26,5 @@
   "dependencies": {
     "node-fetch": "^2.6.1"
   },
-  "homepage": "https://www.tih.tw"
+  "homepage": "https://github.com/tihtw/homebridge-maid-white"
 }
